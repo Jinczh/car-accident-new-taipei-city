@@ -15,10 +15,8 @@
                 center: new Microsoft.Maps.Location(25.0339989, 121.465071),
                 zoom: 13,
             });
-            
         }
         function showData() {
-            
             let records = Data.result.records;
             let pins = [];
             for(let record of records) {
@@ -41,7 +39,6 @@
                 map.entities.push(pin);
             }
         }
-        
     </script>
     <body onload="showMap();">
         <button style='height: 30px; width: 100px' onclick='showData()'>顯示資料</button>
@@ -55,5 +52,4 @@
         </div>
         <div id="myMap" style="position: relative; height: 300px; width: 400px"></div>
     </body>
-    
 </html>
