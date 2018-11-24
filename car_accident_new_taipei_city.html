@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>107年新北市A2道路交通事故</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=Ap9JO0i1ypxqfGOiusNHjvKCOZnISBm5iHKuQema31COZk16vaTJ75prg2XCjbEw"></script>
+        <script src="data.js"></script>
+    </head>
+    <script>
+        const color = {"green": "green", "yellow": "yellow", "red": "red"};
+        var map;
+        function showMap() {
+            map = new Microsoft.Maps.Map("#myMap", {
+                center: new Microsoft.Maps.Location(25.0339989, 121.465071),
+                zoom: 13,
+            });
+            
+        }
+        function showData() {
+            
+            let records = Data.result.records;
+            let pins = [];
+            for(let record of records) {
+                
+                let location = new Microsoft.Maps.Location(parseFloat(record["GPS latitude"]), parseFloat(record["GPS longitude"]));
+                let colorType;
+                if(record.hurt == 1) colorType = color["green"];
+                if(record.hurt == 2) colorType = color["yellow"];
+                if(record.hurt >= 3) colorType = color["red"];
+                let info = [location, colorType];
+                pins.push(info);
+            }
+            for(let info of pins) {
+                let pin = new Microsoft.Maps.Pushpin(
+                    info[0],
+                    {
+                        color: info[1]
+                    }
+                );
+                map.entities.push(pin);
+            }
+        }
+        
+    </script>
+    <body onload="showMap();">
+        <button style='height: 30px; width: 100px' onclick='showData()'>顯示資料</button>
+        <div style='font-size: 15px; background-color: azure'>
+            <span>傷亡人數: </span>
+            <ul>
+            <li style='color: green'>一人</li>
+            <li style='color: #f0f000'>兩人</li>
+            <li style='color: red'>三人以上</li>
+        </ul>
+        </div>
+        <div id="myMap" style="position: relative; height: 300px; width: 400px"></div>
+    </body>
+    
+</html>
